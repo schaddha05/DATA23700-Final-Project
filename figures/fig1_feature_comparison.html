@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-03262c5e4ee0a1c97a1d5abf2a41bf5b"}, "mark": {"type": "line", "point": true}, "encoding": {"color": {"field": "feature", "scale": {"domain": ["Mixed use", "Population density", "Street connectivity", "Transit access"], "range": ["#d1495b", "#3a6ea5", "#2a9d8f", "#8d6cab"]}, "title": "Feature", "type": "nominal"}, "tooltip": [{"field": "feature", "type": "nominal"}, {"field": "y", "type": "quantitative"}, {"field": "n", "type": "quantitative"}], "x": {"field": "x", "title": "Percentile (0 = most car-oriented, 100 = most urban)", "type": "quantitative"}, "y": {"field": "y", "scale": {"zero": false}, "title": "Households with 2+ cars (%)", "type": "quantitative"}}, "height": 320, "title": "Which neighborhood features track car ownership most closely?", "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-03262c5e4ee0a1c97a1d5abf2a41bf5b": [{"feature": "Mixed use", "bin": 1, "x": 5.000435312554414, "y": 50.0, "n": 11486}, {"feature": "Mixed use", "bin": 2, "x": 15.000435312554414, "y": 57.9, "n": 11486}, {"feature": "Mixed use", "bin": 3, "x": 25.000435312554416, "y": 59.6, "n": 11486}, {"feature": "Mixed use", "bin": 4, "x": 35.000435312554416, "y": 59.2, "n": 11486}, {"feature": "Mixed use", "bin": 5, "x": 45.000435312554416, "y": 57.8, "n": 11486}, {"feature": "Mixed use", "bin": 6, "x": 55.000435312554416, "y": 56.7, "n": 11486}, {"feature": "Mixed use", "bin": 7, "x": 65.00043531255442, "y": 55.9, "n": 11486}, {"feature": "Mixed use", "bin": 8, "x": 75.00043531255442, "y": 55.5, "n": 11486}, {"feature": "Mixed use", "bin": 9, "x": 85.00043531255442, "y": 54.4, "n": 11486}, {"feature": "Mixed use", "bin": 10, "x": 95.00043531255442, "y": 52.0, "n": 11486}, {"feature": "Population density", "bin": 1, "x": 5.000435312554414, "y": 73.3, "n": 11486}, {"feature": "Population density", "bin": 2, "x": 15.000435312554414, "y": 67.6, "n": 11486}, {"feature": "Population density", "bin": 3, "x": 25.000435312554416, "y": 63.8, "n": 11486}, {"feature": "Population density", "bin": 4, "x": 35.000435312554416, "y": 61.0, "n": 11486}, {"feature": "Population density", "bin": 5, "x": 45.000435312554416, "y": 59.7, "n": 11486}, {"feature": "Population density", "bin": 6, "x": 55.000435312554416, "y": 58.0, "n": 11486}, {"feature": "Population density", "bin": 7, "x": 65.00043531255442, "y": 55.8, "n": 11486}, {"feature": "Population density", "bin": 8, "x": 75.00043531255442, "y": 51.5, "n": 11486}, {"feature": "Population density", "bin": 9, "x": 85.00043531255442, "y": 43.5, "n": 11486}, {"feature": "Population density", "bin": 10, "x": 95.00043531255442, "y": 21.5, "n": 11486}, {"feature": "Street connectivity", "bin": 1, "x": 5.000435312554414, "y": 68.6, "n": 11486}, {"feature": "Street connectivity", "bin": 2, "x": 15.000435312554414, "y": 66.7, "n": 11486}, {"feature": "Street connectivity", "bin": 3, "x": 25.000435312554416, "y": 61.6, "n": 11486}, {"feature": "Street connectivity", "bin": 4, "x": 35.000435312554416, "y": 57.9, "n": 11486}, {"feature": "Street connectivity", "bin": 5, "x": 45.000435312554416, "y": 56.3, "n": 11486}, {"feature": "Street connectivity", "bin": 6, "x": 55.000435312554416, "y": 54.7, "n": 11486}, {"feature": "Street connectivity", "bin": 7, "x": 65.00043531255442, "y": 52.1, "n": 11486}, {"feature": "Street connectivity", "bin": 8, "x": 75.00043531255442, "y": 49.5, "n": 11486}, {"feature": "Street connectivity", "bin": 9, "x": 85.00043531255442, "y": 45.8, "n": 11486}, {"feature": "Street connectivity", "bin": 10, "x": 95.00043531255442, "y": 37.4, "n": 11486}, {"feature": "Transit access", "bin": 2, "x": 18.438533867316735, "y": 68.3, "n": 42356}, {"feature": "Transit access", "bin": 4, "x": 38.439839804979975, "y": 61.8, "n": 3591}, {"feature": "Transit access", "bin": 5, "x": 45.00087062510883, "y": 59.6, "n": 11481}, {"feature": "Transit access", "bin": 6, "x": 55.01305937663243, "y": 55.7, "n": 11519}, {"feature": "Transit access", "bin": 7, "x": 65.01044750130593, "y": 49.7, "n": 11447}, {"feature": "Transit access", "bin": 8, "x": 75.0187184398398, "y": 42.1, "n": 11544}, {"feature": "Transit access", "bin": 9, "x": 85.0374368796796, "y": 34.7, "n": 11471}, {"feature": "Transit access", "bin": 10, "x": 95.0156712519589, "y": 32.2, "n": 11451}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
