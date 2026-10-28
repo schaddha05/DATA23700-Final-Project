@@ -1,0 +1,5 @@
+pandas>=2.0
+numpy
+altair>=5.0
+vl-convert-python   # lets Altair save charts as PNG
+jupyter

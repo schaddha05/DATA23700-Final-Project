@@ -1,0 +1,7 @@
+# Raw EPA download is several hundred MB: too big for GitHub. Each person keeps their own copy here.
+data/raw/*
+!data/raw/.gitkeep
+.ipynb_checkpoints/
+__pycache__/
+.DS_Store
+.venv/
