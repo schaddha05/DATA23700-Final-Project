@@ -3,3 +3,8 @@ numpy
 altair>=5.0
 vl-convert-python   # lets Altair save charts as PNG
 jupyter
+
+# geospatial: only needed for src/build_vulcan.py (Vulcan CO2 join)
+geopandas
+rasterio
+exactextract

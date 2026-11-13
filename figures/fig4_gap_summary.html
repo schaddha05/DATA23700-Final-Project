@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-d285a7403ed98ae579761d64a864032b"}, "mark": {"type": "rule", "color": "black", "strokeWidth": 1}, "encoding": {"x": {"field": "x", "type": "quantitative"}}}, {"data": {"name": "data-d90f03354576b64d2819463cdee47df0"}, "mark": {"type": "rule", "color": "#bbbbbb", "strokeWidth": 2}, "encoding": {"x": {"aggregate": "min", "field": "gap", "type": "quantitative"}, "x2": {"aggregate": "max", "field": "gap"}, "y": {"axis": {"labelFontSize": 12}, "field": "feature", "sort": ["Population density", "Transit access", "Street connectivity", "Mixed use"], "title": null, "type": "nominal"}}}, {"data": {"name": "data-d90f03354576b64d2819463cdee47df0"}, "mark": {"type": "circle", "opacity": 1, "size": 140}, "encoding": {"color": {"field": "controls", "legend": {"orient": "top"}, "scale": {"domain": ["No controls", "Density held fixed", "Density + income held fixed"], "range": ["#c6dbef", "#4292c6", "#08306b"]}, "sort": ["No controls", "Density held fixed", "Density + income held fixed"], "title": null, "type": "nominal"}, "tooltip": [{"field": "feature", "type": "nominal"}, {"field": "controls", "type": "nominal"}, {"field": "gap", "format": ".1f", "type": "quantitative"}], "x": {"field": "gap", "scale": {"domain": [-5, 60]}, "title": "Drop in % of households with 2+ cars, least \u2192 most urban tenth (points)", "type": "quantitative"}, "y": {"axis": {"labelFontSize": 12}, "field": "feature", "sort": ["Population density", "Transit access", "Street connectivity", "Mixed use"], "title": null, "type": "nominal"}}}], "height": 170, "title": {"text": "How much of each feature's link to car ownership survives the controls?", "subtitle": ["Gaps averaged over density (3) and density \u00d7 income (9) groups. Population density's last point holds income only.", "Income: ACS 2014-18 median household income. Source: EPA Smart Location Database v3.0."]}, "width": 480, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-d285a7403ed98ae579761d64a864032b": [{"x": 0}], "data-d90f03354576b64d2819463cdee47df0": [{"feature": "Mixed use", "controls": "No controls", "gap": -2.0}, {"feature": "Population density", "controls": "No controls", "gap": 51.8}, {"feature": "Street connectivity", "controls": "No controls", "gap": 31.199999999999996}, {"feature": "Transit access", "controls": "No controls", "gap": 36.099999999999994}, {"feature": "Mixed use", "controls": "Density held fixed", "gap": 6.7}, {"feature": "Street connectivity", "controls": "Density held fixed", "gap": 10.933333333333332}, {"feature": "Transit access", "controls": "Density held fixed", "gap": 23.200000000000003}, {"feature": "Mixed use", "controls": "Density + income held fixed", "gap": 10.444444444444446}, {"feature": "Population density", "controls": "Density + income held fixed", "gap": 46.36666666666667}, {"feature": "Street connectivity", "controls": "Density + income held fixed", "gap": 8.733333333333336}, {"feature": "Transit access", "controls": "Density + income held fixed", "gap": 18.62222222222222}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
