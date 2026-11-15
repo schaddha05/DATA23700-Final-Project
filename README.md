@@ -1,7 +1,21 @@
 # DATA23700 Final Project
 
-How mixed-use development, density, street connectivity, and transit access relate to car dependence across
-U.S. metro neighborhoods, and how those patterns relate to on-road CO2 emissions.
+**RQ1.** How strongly is mixed-use development associated with lower car ownership across U.S. metro neighborhoods,
+and how does it compare with population density, street connectivity, and transit access once density and income are held fixed?
+
+**RQ2.** Where do on-road CO2 emissions land relative to car ownership? Do car-light neighborhoods host more or less
+traffic CO2 per km² than car-dependent ones? (Vulcan places emissions where driving happens, not where drivers live.)
+
+Unit of analysis: 114,860 Census block groups in the 54 U.S. metros of 1M+ people.
+
+## Figures
+| File | Shows |
+| --- | --- |
+| `fig1_feature_comparison` | % of households with 2+ cars across percentiles of each feature (no controls) |
+| `fig2_within_density` | Same, with each feature re-ranked inside density thirds |
+| `fig3_within_density_income` | Same, inside 9 density × income groups; bands show the middle 50% of block groups |
+| `fig4_gap_summary` | One gap per feature at each control level |
+| `fig5_robustness` | Fig 4's strictest gap with within-metro ranking and a drive-alone commuting outcome |
 
 ## Repo layout
 ```
@@ -45,7 +59,7 @@ Run everything from the repo root, in this order.
    python src/build_vulcan.py data/raw/<vulcan on-road 2018 tif> blockgroup
    python src/build_vulcan.py data/raw/<vulcan on-road 2018 tif> tract
    ```
-5. Open `notebooks/01_built_environment_vs_car_ownership.ipynb` and run all cells. Figures are saved to `figures/`.
+5. Open `notebooks/01_built_environment_vs_car_ownership.ipynb` and run all cells (Restart and Run All). Figures 1-5 are saved to `figures/`.
 
 ## Data sources
 - U.S. EPA (2021). Smart Location Database v3.0 (block groups; ACS 2014-18, LEHD 2017, HERE 2018, GTFS 2020).
