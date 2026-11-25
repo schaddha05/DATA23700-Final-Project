@@ -1,10 +1,9 @@
 # DATA23700 Final Project
 
-**RQ1.** How strongly is mixed-use development associated with lower car ownership across U.S. metro neighborhoods,
-and how does it compare with population density, street connectivity, and transit access once density and income are held fixed?
+## Project Summary
+The geographic separation of residential, commercial, and employment areas in many American cities has contributed to widespread automobile dependence, raising concerns about transportation accessibility and the quality of urban environments. Our project investigates how strongly mixed-use development is associated with reduced car dependence across major U.S. metropolitan areas and how this relationship compares with other characteristics including population density, street connectivity, and public transportation accessibility. Using data from the EPA's Smart Location Database and the U.S. Census Bureau's American Community Survey, we use household vehicle ownership as a proxy for car dependence, primarily examining the proportion of households owning two or more vehicles. Through interactive visualizations and comparative analysis, we explore these relationships while accounting for socioeconomic factors such as household income. Our goal is to identify which characteristics of urban development are most strongly associated with reduced automobile dependence and provide insight into how American cities can create more accessible, walkable, and connected environments where driving is an option rather than a necessity.
 
-**RQ2.** Where do on-road CO2 emissions land relative to car ownership? Do car-light neighborhoods host more or less
-traffic CO2 per km² than car-dependent ones? (Vulcan places emissions where driving happens, not where drivers live.)
+**Research question.** How strongly is mixed-use development associated with reduced car dependence across major U.S. metropolitan city areas, and how does this relationship compare with other characteristics of the built environment, such as population density, street connectivity, and public transportation accessibility?
 
 Unit of analysis: 114,860 Census block groups in the 54 U.S. metros of 1M+ people.
 
@@ -16,13 +15,13 @@ Unit of analysis: 114,860 Census block groups in the 54 U.S. metros of 1M+ peopl
 | `fig3_within_density_income` | Same, inside 9 density × income groups; bands show the middle 50% of block groups |
 | `fig4_gap_summary` | One gap per feature at each control level |
 | `fig5_robustness` | Fig 4's strictest gap with within-metro ranking and a drive-alone commuting outcome |
+| `fig6_commuting_balance` | Fig 4's strictest car-ownership gaps across groups defined by jobs per resident worker |
 
 ## Repo layout
 ```
 data/raw/         raw downloads (not committed, see below)
 data/processed/   cleaned tables produced by src/ scripts (committed)
-src/              data-prep scripts (build_sld, build_acs, build_vulcan)
-docs/             working notes (Vulcan join handoff)
+src/              data-prep scripts (build_sld, build_acs)
 notebooks/        analysis notebooks (literate: text + code + figures)
 figures/          exported charts (PNG + interactive HTML)
 ```
@@ -54,18 +53,11 @@ Run everything from the repo root, in this order.
    python src/build_acs.py
    ```
    On a Mac, if you see `CERTIFICATE_VERIFY_FAILED`, run `"/Applications/Python 3.x/Install Certificates.command"` once.
-4. Join Vulcan v4.0 on-road CO2 (see `docs/vulcan_handoff.md` for the download) → `data/processed/vulcan_onroad_*.csv.gz`:
-   ```bash
-   python src/build_vulcan.py data/raw/<vulcan on-road 2018 tif> blockgroup
-   python src/build_vulcan.py data/raw/<vulcan on-road 2018 tif> tract
-   ```
-5. Open `notebooks/01_built_environment_vs_car_ownership.ipynb` and run all cells (Restart and Run All). Figures 1-5 are saved to `figures/`.
+4. Open `notebooks/01_built_environment_vs_car_ownership.ipynb` and run all cells (Restart and Run All). Figures 1–6 are saved to `figures/`.
 
 ## Data sources
 - U.S. EPA (2021). Smart Location Database v3.0 (block groups; ACS 2014-18, LEHD 2017, HERE 2018, GTFS 2020).
 - U.S. Census Bureau. ACS 2014-2018 5-year estimates, tables B19013 and B08301 (joined on `geoid`).
-- Gurney & Gawuc (2026). Vulcan: High-Resolution Annual Fossil Fuel CO2 Emissions in USA, 2010-2022 (v4.0). ORNL DAAC. https://doi.org/10.3334/ORNLDAAC/2505 (on-road sector, 2018, 1 km grid; joined spatially)
-- U.S. Census Bureau. TIGER/Line 2019 block-group and tract boundaries (for the Vulcan join).
 
 ## Contribution statement
 _Each member fills in their own line before submission (due Dec 4)._
