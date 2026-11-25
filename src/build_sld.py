@@ -7,11 +7,13 @@ Writes:
     data/processed/sld_blockgroups.csv.gz   (small enough to commit to GitHub)
 
 What it does:
-  1. Reads only the ~25 SLD columns we need (the full file is several hundred MB).
+  1. Reads only the ~25 SLD columns we need (the full file is several hundred MB),
+     including LEHD job and worker counts for checking commuting in and out.
   2. Converts the SLD's missing-value code (-99999) to NaN.
   3. Builds a 12-digit block-group ID ("geoid") for joining to Census ACS data later.
   4. Puts car-ownership shares on a 0-100 scale.
-  5. Adds flags we filter on in the notebook (metro area, major metro, enough households).
+  5. Adds commuting-balance columns (jobs per resident worker, job vs. resident low-wage gap).
+  6. Adds flags we filter on in the notebook (metro area, major metro, enough households).
 """
 
 import sys
@@ -43,6 +45,13 @@ COLUMNS = {
     "D4A": "transit_dist_m",        # walking distance (m) to nearest transit stop
     "D4C": "transit_freq",          # evening-peak transit trips / hour within 1/4 mile
     "NatWalkInd": "walk_index",     # EPA National Walkability Index (1-20)
+    # Commuting in and out. mixed_use counts the jobs located in a block group, but car
+    # ownership describes the people who live there. If those jobs are filled by people
+    # who commute in from elsewhere, a high mixed-use score says little about residents.
+    # These LEHD 2017 counts let us see where jobs and resident workers are out of balance.
+    "TotEmp": "jobs",                         # jobs located here (work location)
+    "Workers": "resident_workers",            # workers who live here (home location)
+    "E_PctLowWage": "job_low_wage_share",     # share of jobs here paying <= $1,250/month
 }
 
 ID_COLS = ["statefp", "countyfp", "tractce", "blkgrpce", "cbsa", "cbsa_name"]
@@ -88,7 +97,21 @@ def main(raw_path: str, out_path: str = "data/processed/sld_blockgroups.csv.gz")
         if df[c].max() <= 1.0001:
             df[c] = df[c] * 100
 
-    # 4. Flags used for filtering in the notebook.
+    # 4. Commuting balance (all derived from the LEHD counts above).
+    #    Wage shares stay on a 0-1 scale to match low_wage_share (resident workers).
+    if df["job_low_wage_share"].max() > 1.0001:
+        df["job_low_wage_share"] = df["job_low_wage_share"] / 100
+    # A wage share for jobs located here means nothing when no jobs are located here.
+    df.loc[df["jobs"].fillna(0).eq(0), "job_low_wage_share"] = np.nan
+    #    Jobs per resident worker: about 1 = balanced; above 1 = more jobs than working
+    #    residents, so the area must draw commuters in; below 1 = residents commute out.
+    #    Undefined when nobody who works lives here.
+    df["jobs_per_resident_worker"] = df["jobs"] / df["resident_workers"].where(df["resident_workers"] > 0)
+    #    Positive = jobs here are lower-paid than the residents' own jobs, which is
+    #    Prof. Kale's example: downtown restaurant workers who can't afford to live downtown.
+    df["low_wage_gap"] = df["job_low_wage_share"] - df["low_wage_share"]
+
+    # 5. Flags used for filtering in the notebook.
     df["in_metro"] = df["cbsa_name"].notna() & df["cbsa_name"].str.strip().ne("")
     df["major_metro"] = df["in_metro"] & (df["cbsa_pop"] >= MAJOR_METRO_POP)
     df["enough_households"] = df["households"] >= MIN_HOUSEHOLDS
@@ -106,6 +129,9 @@ def main(raw_path: str, out_path: str = "data/processed/sld_blockgroups.csv.gz")
     print(f"  in a 1M+ metro:            {df['major_metro'].sum():>8,}  ({df.loc[df['major_metro'], 'cbsa'].nunique()} metros)")
     print(f"  1M+ metro and 50+ households: {keep.sum():>5,}  <- analysis sample")
     print(f"  no transit stop within 3/4 mi (analysis sample): {df.loc[keep, 'no_stop_within_3_4mi'].mean():.0%}")
+    ratio = df.loc[keep, "jobs_per_resident_worker"].dropna()
+    print(f"  jobs per resident worker (analysis sample): median {ratio.median():.2f}, "
+          f"more than 2 in {(ratio > 2).mean():.0%} of block groups")
 
 
 if __name__ == "__main__":
