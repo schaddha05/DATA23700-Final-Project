@@ -1,10 +1,9 @@
 pandas>=2.0
 numpy
+scipy               # Spearman correlations in the notebook
 altair>=5.0
 vl-convert-python   # lets Altair save charts as PNG
 jupyter
 
-# geospatial: only needed for src/build_vulcan.py (Vulcan CO2 join)
+# geospatial: only needed for the Step 10 maps
 geopandas
-rasterio
-exactextract
