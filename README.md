@@ -16,6 +16,9 @@ Unit of analysis: 114,860 Census block groups in the 54 U.S. metros of 1M+ peopl
 | `fig4_gap_summary` | One gap per feature at each control level |
 | `fig5_robustness` | Fig 4's strictest gap with within-metro ranking and a drive-alone commuting outcome |
 | `fig6_commuting_balance` | Fig 4's strictest car-ownership gaps across groups defined by jobs per resident worker |
+| `fig7_residual_by_mixed_use` | Residual from a model of density, income, transit and connectivity, by mixed-use percentile |
+| `fig8_residual_map_chicago` | Map of model residuals next to mixed use, Cook County (Chicago) |
+| `fig8b_residual_map_chicago_metro` | Same map for the full Chicago metro, for comparison (saved only) |
 
 ## Repo layout
 ```
@@ -53,15 +56,22 @@ Run everything from the repo root, in this order.
    python src/build_acs.py
    ```
    On a Mac, if you see `CERTIFICATE_VERIFY_FAILED`, run `"/Applications/Python 3.x/Install Certificates.command"` once.
-4. Open `notebooks/01_built_environment_vs_car_ownership.ipynb` and run all cells (Restart and Run All). Figures 1–6 are saved to `figures/`.
+4. Download the **2018 Census block group boundaries** for the Chicago metro states into `data/raw/` (leave them zipped). Only needed for the Step 10 maps:
+   ```bash
+   curl -o data/raw/cb_2018_17_bg_500k.zip https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_17_bg_500k.zip
+   curl -o data/raw/cb_2018_18_bg_500k.zip https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_18_bg_500k.zip
+   curl -o data/raw/cb_2018_55_bg_500k.zip https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_55_bg_500k.zip
+   ```
+5. Open `notebooks/01_built_environment_vs_car_ownership.ipynb` and run all cells (Restart and Run All). Figures 1–8 are saved to `figures/`.
 
 ## Data sources
 - U.S. EPA (2021). Smart Location Database v3.0 (block groups; ACS 2014-18, LEHD 2017, HERE 2018, GTFS 2020).
 - U.S. Census Bureau. ACS 2014-2018 5-year estimates, tables B19013 and B08301 (joined on `geoid`).
+- U.S. Census Bureau. 2018 cartographic boundary files, block groups (Illinois, Indiana, Wisconsin), for the Step 10 maps.
 
 ## Contribution statement
 _Each member fills in their own line before submission (due Dec 4)._
 - **Alex Guo:**
 - **Saahil Chaddha:**
-- **Aly Elkaffas:**
+- **Aly Elkaffas:** Step 10: residual model, Fig 7 (residual by mixed use), Fig 8 (Cook County residual map) and the supporting checks; README and requirements updates.
 - **Matthew Quarles:**
